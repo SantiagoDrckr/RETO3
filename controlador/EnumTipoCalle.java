@@ -5,8 +5,6 @@
  */
 package controlador;
 
-import com.mysql.cj.jdbc.result.ResultSetInternalMethods;
-
 /**
  *
  * @author ansab

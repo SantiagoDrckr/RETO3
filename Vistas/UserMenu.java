@@ -17,7 +17,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 /**
  *
  * @author ansab
@@ -40,11 +39,13 @@ public class UserMenu extends javax.swing.JFrame {
      * Creates new form UserMenu
      */
     public UserMenu() {
-        enumDepartamentos =  new DefaultComboBoxModel(EnumDepartamento.values());
+        enumDepartamentos = new DefaultComboBoxModel(EnumDepartamento.values());
         enumZona = new DefaultComboBoxModel(EnumZona.values());
         enumTipoCalle = new DefaultComboBoxModel(EnumTipoCalle.values());
+        initComponents();
         setLocationRelativeTo(null);
         listarEmpleados();
+
     }
 // metodo que trae a todos los empleados exitentes de la base de datos
 
@@ -81,7 +82,7 @@ public class UserMenu extends javax.swing.JFrame {
             }
 
         } else {
-            String queryConsulta = "SELECT * FROM  empleado WHERE nombreEmp LIKE '%"+filtroBusqueda+"%'  OR apellidos LIKE '%"+filtroBusqueda+"%'";
+            String queryConsulta = "SELECT * FROM  empleado WHERE nombreEmp LIKE '%" + filtroBusqueda + "%'  OR apellidos LIKE '%" + filtroBusqueda + "%'";
             System.out.println(queryConsulta);
             try {
                 connetion = conexion.getConnetion();
@@ -100,7 +101,7 @@ public class UserMenu extends javax.swing.JFrame {
                     empleados[4] = rs.getString("documento");
                     empleados[5] = rs.getString("correo");
                     empleados[6] = rs.getString("FK_idSucursal");
-                    
+
                     // creamos una fila dentro de la tabla por cada empleado
                     contenidoTablaEmpleados.addRow(empleados);
                     System.out.println("id: " + empleados[0] + ", nombre: " + empleados[1] + ", documento: " + empleados[2] + " " + empleados[3] + ",correo: " + empleados[4]);
@@ -161,10 +162,12 @@ public class UserMenu extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         cbZona = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-        txtNumero2 = new javax.swing.JTextField();
+        txtNumero3 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         btnListar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
+        txtNumero2 = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -285,11 +288,21 @@ public class UserMenu extends javax.swing.JFrame {
         jLabel4.setText("Sucursal");
 
         txtSucursal.setForeground(new java.awt.Color(0, 0, 0));
+        txtSucursal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSucursalActionPerformed(evt);
+            }
+        });
 
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Departamento");
 
         txtNumero1.setForeground(new java.awt.Color(0, 0, 0));
+        txtNumero1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumero1ActionPerformed(evt);
+            }
+        });
 
         cbDepartamento.setForeground(new java.awt.Color(0, 0, 0));
         cbDepartamento.setModel(enumDepartamentos);
@@ -309,10 +322,10 @@ public class UserMenu extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Zona");
 
-        txtNumero2.setForeground(new java.awt.Color(0, 0, 0));
+        txtNumero3.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel10.setText("  -");
+        jLabel10.setText("#");
 
         btnListar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/showUser.png"))); // NOI18N
         btnListar.setText("Ver sucursales");
@@ -325,6 +338,11 @@ public class UserMenu extends javax.swing.JFrame {
             }
         });
 
+        txtNumero2.setForeground(new java.awt.Color(0, 0, 0));
+
+        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel11.setText("  -");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -333,35 +351,37 @@ public class UserMenu extends javax.swing.JFrame {
                 .addGap(79, 79, 79)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(cbDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(130, 130, 130)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(cbCalle, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtSucursal)))
+                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(606, 606, 606))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(95, 95, 95)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtNumero1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNumero2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtNumero2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cbZona, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(427, 427, 427)))
-                .addGap(251, 251, 251))
+                                .addComponent(txtNumero3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(439, 439, 439))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtSucursal)
+                                    .addComponent(cbDepartamento, 0, 280, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(cbCalle, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cbZona, javax.swing.GroupLayout.Alignment.LEADING, 0, 278, Short.MAX_VALUE)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addContainerGap())))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(522, 522, 522)
                 .addComponent(btnListar)
@@ -380,28 +400,25 @@ public class UserMenu extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(txtSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel9))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(cbZona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(13, 13, 13)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel9)
+                    .addComponent(cbZona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(cbCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtNumero1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNumero3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
                     .addComponent(txtNumero2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
+                    .addComponent(jLabel11))
                 .addGap(54, 54, 54)
                 .addComponent(btnListar)
                 .addGap(16, 16, 16))
@@ -481,7 +498,7 @@ public class UserMenu extends javax.swing.JFrame {
             String correo = tblEmpleados.getValueAt(row, 5).toString();
 
             System.out.println("idEmp: " + idEmp + ", nombre: " + nombreEmp + "  " + apellidos
-                + ", documento: " + tipoDocumento + " " + documento + ", correo: " + correo);
+                    + ", documento: " + tipoDocumento + " " + documento + ", correo: " + correo);
 
             ShowUserForm showUserForm = new ShowUserForm(this, true);
             showUserForm.recibeDatos(idEmp, nombreEmp, apellidos, tipoDocumento, documento, correo);
@@ -493,16 +510,151 @@ public class UserMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_tblEmpleadosMouseClicked
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-      String  nombreSucursal = txtSucursal.getText();
-      int departamentoOption = (int) cbDepartamento.getSelectedIndex();
-      int zonaOption = cbZona.getSelectedIndex();
-      int tipoCalleOption = cbCalle.getSelectedIndex();
-      String numero1 = txtNumero1.getSelectedText();
-      String numero2 = txtNumero2.getSelectedText();
-        System.out.println("Sucursal: " + nombreSucursal + "departamento: " + departamentoOption + "zona: " + 
-                zonaOption + "Calle: " + tipoCalleOption + "numero: " + numero1 + "-" +numero2);
+        String nombreSucursal = txtSucursal.getText();
+        int departamentoOption = (int) cbDepartamento.getSelectedIndex();
+        int zonaOption = cbZona.getSelectedIndex();
+        int tipoCalleOption = cbCalle.getSelectedIndex();
+        String numero1 = txtNumero1.getSelectedText();
+        String numero2 = txtNumero2.getSelectedText();
+        String numero3 = txtNumero3.getSelectedText();
+
+        String zonaOptionT = "";
+        String tipoCalleT = "";
+        String departamentoOptionT = "";
+
+        if (zonaOption == 0) {
+            zonaOptionT = "Rural";
+        } else {
+            zonaOptionT = "Urbana";
+        }
+        if (departamentoOption == 0) {
+            departamentoOptionT = "Amazonas";
+        }
+        else if (departamentoOption == 1) {
+            departamentoOptionT = "Antioquia";
+        }
+        else if (departamentoOption == 2) {
+            departamentoOptionT = "Arauca";
+        }
+        else if (departamentoOption == 3) {
+            departamentoOptionT = "Atlántico";
+        }
+        else if (departamentoOption == 4) {
+            departamentoOptionT = "Bogotá";
+        }
+        else if (departamentoOption == 5) {
+            departamentoOptionT = "Bolívar";
+        }
+        else if (departamentoOption == 6) {
+            departamentoOptionT = "Boyacá";
+        }
+        else if (departamentoOption == 7) {
+            departamentoOptionT = "Caldas";
+        }
+        else if (departamentoOption == 8) {
+            departamentoOptionT = "Caquetá";
+        }
+        else if (departamentoOption == 9) {
+            departamentoOptionT = "Casanare";
+        }
+        else if (departamentoOption == 10) {
+            departamentoOptionT = "Cauca";
+        }
+        else if (departamentoOption == 11) {
+            departamentoOptionT = "Cesar";
+        }
+        else if (departamentoOption == 12) {
+            departamentoOptionT = "Chocó";
+        }
+        else if (departamentoOption == 13) {
+            departamentoOptionT = "Córdoba";
+        }
+        else if (departamentoOption == 14) {
+            departamentoOptionT = "Cundinamarca";
+        }
+        else if (departamentoOption == 15) {
+            departamentoOptionT = "Guainía";
+        }
+        else if (departamentoOption == 16) {
+            departamentoOptionT = "Guaviare";
+        }
+        else if (departamentoOption == 17) {
+            departamentoOptionT = "Huila";
+        }
+        else if (departamentoOption == 18) {
+            departamentoOptionT = "LaGuajira";
+        }
+        else if (departamentoOption == 19) {
+            departamentoOptionT = "Magdalena";
+        }
+        else if (departamentoOption == 20) {
+            departamentoOptionT = "Meta";
+        }
+        else if (departamentoOption == 21) {
+            departamentoOptionT = "Nariño";
+        }
+        else if (departamentoOption == 22) {
+            departamentoOptionT = "NortedeSantander";
+        }
+        else if (departamentoOption == 23) {
+            departamentoOptionT = "Putumayo";
+        }
+        else if (departamentoOption == 24) {
+            departamentoOptionT = "Quindío";
+        }
+        else if (departamentoOption == 25) {
+            departamentoOptionT = "Risaralda";
+        }
+        else if (departamentoOption == 26) {
+            departamentoOptionT = "SanAndrésyProvidencia";
+        }
+        else if (departamentoOption == 27) {
+            departamentoOptionT = "Santander";
+        }
+        else if (departamentoOption == 28) {
+            departamentoOptionT = "Sucre";
+        }
+        else if (departamentoOption == 29) {
+            departamentoOptionT = "Tolima";
+        }
+        else if (departamentoOption == 30) {
+            departamentoOptionT = "ValledelCauca";
+        }
+        else if (departamentoOption == 31) {
+            departamentoOptionT = "Vaupés";
+        }
+        else{
+            departamentoOptionT = "Vichada";
+        }
+
+        if (tipoCalleOption == 0) {
+            tipoCalleT = "Avenida";
+        } else if (tipoCalleOption == 1) {
+            tipoCalleT = "Calle";
+        } else if (tipoCalleOption == 2) {
+            tipoCalleT = "Carrera";
+        } else if (tipoCalleOption == 3) {
+            tipoCalleT = "Circumbalar";
+        } else if (tipoCalleOption == 4) {
+            tipoCalleT = "Esquina";
+        } else if (tipoCalleOption == 5) {
+            tipoCalleT = "Transversal";
+        } else {
+            tipoCalleT = "Otro";
+        }
+        System.out.println("Sucursal: " + nombreSucursal + ", departamento: " + departamentoOptionT + ", zona: "
+                + zonaOptionT + ", Calle: " + tipoCalleT + ", numero: " + numero1 + "-" + numero2 + "-" + numero3);
+        String queryMunicipio = "INSERT INTO `municipio`(`nombreMunicipio`) VALUES (" + departamentoOption + ")";
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void txtNumero1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumero1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero1ActionPerformed
+
+    private void txtSucursalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSucursalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSucursalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -549,6 +701,7 @@ public class UserMenu extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbZona;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -566,6 +719,7 @@ public class UserMenu extends javax.swing.JFrame {
     private javax.swing.JTable tblEmpleados;
     private javax.swing.JTextField txtNumero1;
     private javax.swing.JTextField txtNumero2;
+    private javax.swing.JTextField txtNumero3;
     private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtSucursal;
     // End of variables declaration//GEN-END:variables
